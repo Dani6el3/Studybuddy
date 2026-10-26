@@ -49,6 +49,8 @@ Flashcard review records “got it” or “again”. Quick self-test shuffles t
 2. Select Vite, build command `npm run build`, output directory `dist`.
 3. Deploy. Hash routes work without rewrite rules. No environment variables are needed.
 
+The included `vercel.json` sets the Vite framework, `npm ci` install command, `npm run build` and `dist` output explicitly. If upgrading an older failed deployment, redeploy the newest Git commit with the build cache disabled once. The lockfile includes complete cross-platform package metadata for clean installations on Vercel’s Linux builders.
+
 ## Deploy to GitHub Pages
 
 Run `npm ci` and `npm run build`, then upload **dist/** using GitHub Pages Actions (`actions/upload-pages-artifact` and `actions/deploy-pages`). Give the workflow `pages: write` and `id-token: write`, and set the environment to `github-pages`. In repository Settings → Pages choose GitHub Actions. The relative Vite base (`./`) supports repository subpaths; hash routes do not need a 404 workaround. Always build from the committed lockfile.

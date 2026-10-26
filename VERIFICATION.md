@@ -2,6 +2,10 @@
 
 Completed 26 October 2026.
 
+## Vercel clean-install repair
+
+The original lockfile contained 72 optional platform package entries without version metadata. It was regenerated using npm 10.9.4 and the official registry in an isolated folder, preserving all existing package versions. All 435 package entries now have versions, with registry URLs and integrity metadata for non-bundled dependencies. A fresh `npm ci` succeeded with 357 installed packages. The production build was checked against this fresh installation, and all **15 tests** pass, including a lockfile regression check. `vercel.json` explicitly selects Vite, `npm ci`, `npm run build` and `dist`. A Vercel deployment result must still be confirmed on Vercel; local verification does not establish that the hosted deployment succeeded.
+
 - `npm test`: **7 tests passed**. Covers default/custom semester dates, week 4 → 5 topic wrap, study mode boundaries, weekday schedules, Saturday session count, Sunday times, URL parsing, timer deadline recovery/idempotent minutes, all-data JSON round-trip, rejected invalid backups, storage exceptions and streak/weekly progress calculations.
 - `npm run build`: **passed**. React/Vite production output and vite-plugin-pwa service worker generated successfully. App assets are precached; no fonts, APIs or CDN scripts are needed for the app shell.
 - Browser: production preview at **380 × 844**. Today displayed Monday 26 October 2026, week 1, Learn mode, CPY 503 / CPY 507 / MLS 515 and their topic 1 content. Document width did not exceed the viewport; mobile bottom navigation rendered correctly.
