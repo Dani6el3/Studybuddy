@@ -8,5 +8,5 @@ export function finishTimer(data,now=Date.now()){
 }
 export async function notifyComplete(){
  if(!('Notification' in window)||Notification.permission!=='granted')return;
- try{const registration=await navigator.serviceWorker?.getRegistration();if(registration)await registration.showNotification('Focus session complete',{body:'A little progress, well earned. Take a break and mark your session done.',icon:new URL('../../public/icon-192.png',import.meta.url).href,tag:'studybuddy-focus'});else new Notification('Focus session complete',{body:'Take a break. You earned it.'});}catch{/* Some mobile browsers disallow notifications in background tabs. */}
+ try{const registration=await navigator.serviceWorker?.getRegistration();if(registration)await registration.showNotification('Focus session complete',{body:'A little progress, well earned. Take a break and mark your session done.',icon:`${import.meta.env.BASE_URL}icon-192.png`,tag:'studybuddy-focus'});else new Notification('Focus session complete',{body:'Take a break. You earned it.'});}catch{/* Some mobile browsers disallow notifications in background tabs. */}
 }
