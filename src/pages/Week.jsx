@@ -13,7 +13,12 @@ export default function Week({ data }) {
       >
         Your recurring timetable. One focused session at a time.
       </PageHead>
-      <div className="week-grid">
+      <a className="button primary" href="#settings">
+        Create or edit study schedule
+      </a>
+      <div
+        className={`week-grid section-gap ${data.customSchedule ? "custom-week" : ""}`}
+      >
         <div className="week-row week-col-head">
           <span>DAY</span>
           <span>MORNING</span>
@@ -35,7 +40,7 @@ export default function Week({ data }) {
                 <small className="muted"> {date.getDate()}</small>
                 {current && <span className="course-chip">Today</span>}
               </h3>
-              {sessionsFor(date).map((s) => (
+              {sessionsFor(date, data.customSchedule).map((s) => (
                 <div className="week-cell" key={s.id}>
                   <small>
                     {s.start} – {s.end}
@@ -57,7 +62,7 @@ export default function Week({ data }) {
                   </div>
                 </div>
               ))}
-              {sessionsFor(date).length === 2 && (
+              {sessionsFor(date, data.customSchedule).length === 0 && (
                 <div className="week-cell muted">Rest & recharge</div>
               )}
             </section>
@@ -65,8 +70,9 @@ export default function Week({ data }) {
         })}
       </div>
       <p className="muted section-gap">
-        Sunday has its own morning routine: 07:30–08:30, 08:30–09:00, then
-        09:00–09:20. Saturday evenings are for past questions.
+        {data.customSchedule
+          ? "Your custom sessions repeat every week. Edit them in Settings."
+          : "Sunday has its own morning routine: 07:30–08:30, 08:30–09:00, then 09:00–09:20. Saturday evenings are for past questions."}
       </p>
     </>
   );

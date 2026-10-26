@@ -1,4 +1,5 @@
 import { defaultStart } from "../data/courses.js";
+import { validateSchedule } from "./schedule.js";
 export const freshData = () => ({
   version: 1,
   startDate: defaultStart,
@@ -9,6 +10,9 @@ export const freshData = () => ({
   sessions: {},
   focusLog: [],
   timer: null,
+  customSchedule: null,
+  reminders: { enabled: false, leadMinutes: 10 },
+  reminderHistory: {},
 });
 const object = (x) => !!x && typeof x === "object" && !Array.isArray(x);
 export function validateData(x) {
@@ -80,6 +84,20 @@ export function validateData(x) {
       !(x.timer.endsAt === null || Number.isFinite(x.timer.endsAt)))
   )
     throw Error("Invalid timer.");
+  if (x.customSchedule != null) validateSchedule(x.customSchedule);
+  if (
+    x.reminders !== undefined &&
+    (!object(x.reminders) ||
+      typeof x.reminders.enabled !== "boolean" ||
+      ![0, 5, 10, 15, 30].includes(x.reminders.leadMinutes))
+  )
+    throw Error("Invalid reminder settings.");
+  if (
+    x.reminderHistory !== undefined &&
+    (!object(x.reminderHistory) ||
+      Object.values(x.reminderHistory).some((v) => !Number.isFinite(v)))
+  )
+    throw Error("Invalid reminder history.");
   return { ...freshData(), ...x };
 }
 export function loadData() {

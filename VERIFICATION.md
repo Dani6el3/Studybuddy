@@ -12,6 +12,14 @@ Completed 26 October 2026.
 
 ## Limits and remaining device checks
 
+### Schedule and reminder update
+
+- Custom weekly schedule editing, reminders, calendar export and backward-compatible backup migration added on 26 October 2026.
+- **14 automated tests pass**, including stable session identifiers, sorting, overlap rejection, custom-plan backup round-trip, legacy backup migration, lead-time checks, skipped completed sessions, reminder deduplication, stale-reminder cutoff, midnight boundary and four-week calendar alarms.
+- Browser permission was granted in the preview. Enabling reminders and sending a test returned **“Test notification sent.”** This confirms browser notification API acceptance; operating-system presentation and locked-phone delivery remain device-dependent.
+- Created a verification session through the UI and confirmed it appeared on Today. This verification session is removed after testing.
+- Calendar export is a downloadable `.ics` file with display alarms; no events are sent automatically to an external account. Import and check calendar alert behavior on the target device.
+
 - Timer suspension recovery is checked with simulated timestamps several minutes after expiry, including avoiding duplicate minutes. An actual locked-phone run and browser-delayed notification require the target device. No server/push service can wake the closed app.
 - Backup round-trip is verified at the data/validation layer. The UI exports the same data object and imports through the same validator with a replacement confirmation.
 - A real phone installation was **not performed**. The manifest, icons, standalone display and generated service worker are present. Install from HTTPS using the README steps and confirm airplane-mode use on that phone.

@@ -3,6 +3,8 @@ import { Download, Upload, Trash2 } from "lucide-react";
 import { PageHead } from "../components/UI";
 import { freshData, validateData } from "../lib/storage";
 import { dateKey } from "../lib/study";
+import ScheduleEditor from "../components/ScheduleEditor";
+import ReminderSettings from "../components/ReminderSettings";
 export default function Settings({ data, update }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -32,7 +34,7 @@ export default function Settings({ data, update }) {
       ) {
         update(next);
         setMessage(
-          "Backup restored: notes, links, flashcards, progress and timer.",
+          "Backup restored: notes, links, flashcards, progress, schedule, reminders and timer.",
         );
       }
     } catch (err) {
@@ -46,6 +48,8 @@ export default function Settings({ data, update }) {
         Everything stays in this browser. A regular backup keeps your work safe.
       </PageHead>
       <div className="stack settings-card">
+        <ReminderSettings data={data} update={update} />
+        <ScheduleEditor data={data} update={update} />
         <section className="card">
           <h2>Semester dates</h2>
           <label className="field">
@@ -73,7 +77,8 @@ export default function Settings({ data, update }) {
           <h2>Keep a copy of your progress</h2>
           <p className="section-copy">
             Export includes notes, saved links, flashcards, topic checkboxes,
-            session history, focus minutes and your timer.
+            session history, focus minutes, your custom schedule, reminders and
+            timer.
           </p>
           <div className="row section-gap">
             <button onClick={exportData} className="primary">

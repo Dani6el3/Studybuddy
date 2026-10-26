@@ -29,6 +29,14 @@ Dates use the device’s local calendar. Semester week 1 starts on the date in S
 
 ## Your data
 
+### Create a schedule and receive reminders
+
+Open **Settings → Your weekly schedule** (or **Week → Create or edit study schedule**). Add a session with a name, one or more weekdays, local start/end times and optional courses. Edit or delete existing sessions; overlapping times on the same day are rejected. The plan repeats weekly and immediately updates Today and Week. Restore original timetable returns to the supplied schedule. Existing topic notes and completed-session history remain intact. Your custom plan and reminder preferences are included in JSON backups; older backups migrate automatically.
+
+In **Settings → Study reminders**, choose 0, 5, 10, 15 or 30 minutes before the session. Select **Enable session reminders**, grant the browser permission, then **Send test notification**. The app checks every 15 seconds and on resume, skips completed sessions, and records reminders to avoid duplicates in the same running app. It catches up only within five minutes of the scheduled reminder to avoid a burst of old alerts. Independent open tabs can still race to show a reminder; use one active app window.
+
+Notifications depend on the browser being able to run the app; they are not guaranteed when it is suspended or closed. On iPhone, use the installed Home Screen app. For closed-app reminders without a server, choose **Download calendar with reminders**, import the `.ics` file into your phone/calendar app, and verify calendar alert permissions. It exports the next four weeks with local times and display alarms. Calendar apps control whether imported alarms are honored. Re-export after changing your plan and replace prior imported events to avoid duplicates.
+
 Notes, links, flashcards, topic checkboxes, session history and the focus timer are stored under `studybuddy` in localStorage. Every browser storage read/write is caught; a visible error explains if changes only exist in memory. Clearing browser data removes your work. Use Settings → Export all data regularly. Import validates a version 1 JSON backup and asks before replacing current data. It does not run imported text or HTML.
 
 The timer stores an absolute deadline. A suspended tab recovers elapsed time on return; pause stores remaining milliseconds. Each completed timer adds its full focus duration exactly once. Marking a session done is independent of the timer. Incomplete/replaced timers do not add minutes. Notifications require explicit permission and browser support. Browsers may delay notifications until the app resumes; there is no background server or push service to wake a fully closed app.

@@ -1,4 +1,85 @@
 @import "tailwindcss";
+/* Keep the hidden backup picker from inheriting full-width input sizing. */
+input.sr-only { width:1px; height:1px; min-height:0; padding:0; border:0; }
+/* Custom schedules can contain any number of sessions per day. */
+.schedule-form {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--soft);
+}
+.schedule-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+  min-width: 0;
+}
+.schedule-form legend {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.day-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.day-picker label,
+.course-picker label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  font-size: 12px;
+}
+.day-picker label {
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+}
+.course-picker {
+  display: grid;
+  gap: 5px;
+}
+.schedule-day {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.schedule-entry {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 0;
+}
+.schedule-entry > div {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.schedule-entry strong {
+  font-size: 13px;
+}
+.schedule-entry small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+  line-height: 1.7;
+}
+.custom-week .week-col-head {
+  display: none;
+}
+.custom-week .week-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.custom-week .week-row h3 {
+  grid-column: 1/-1;
+}
+@media (max-width: 700px) {
+  .custom-week .week-row {
+    grid-template-columns: 1fr;
+  }
+}
 :root {
   font-family:
     Inter,
@@ -1399,4 +1480,3 @@ a svg {
     color: #fff0fa;
   }
 }
-

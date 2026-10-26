@@ -17,7 +17,7 @@ export default function Today({ data, update, startTimer }) {
     return () => clearInterval(id);
   }, []);
   const state = cycle(now, data.startDate);
-  const sessions = sessionsFor(now);
+  const sessions = sessionsFor(now, data.customSchedule);
   const done = sessions.filter((s) => data.sessions[s.id]).length;
   const current = now.getHours() * 60 + now.getMinutes();
   return (
@@ -98,6 +98,15 @@ export default function Today({ data, update, startTimer }) {
             </a>
           </div>
           <div className="sessions">
+            {!sessions.length && (
+              <section className="card">
+                <h3>A clear day, a fresh plan.</h3>
+                <p className="muted">You have no sessions today.</p>
+                <a className="button primary" href="#settings">
+                  Create a study session
+                </a>
+              </section>
+            )}
             {sessions.map((s, i) => {
               const active =
                 current >= minutes(s.start) && current < minutes(s.end);
@@ -108,8 +117,12 @@ export default function Today({ data, update, startTimer }) {
                   className={`session-card ${active ? "current" : ""} ${complete ? "complete" : ""}`}
                 >
                   <div className="session-top">
-                    <span className={`session-number tone-${i}`}>
-                      {i === 0 ? "AM" : i === 1 ? "PM" : "+"}
+                    <span className={`session-number tone-${i % 3}`}>
+                      {duration(s) <= 30
+                        ? "+"
+                        : minutes(s.start) < 720
+                          ? "AM"
+                          : "PM"}
                     </span>
                     <div>
                       <span className="eyebrow">{s.label}</span>
@@ -133,7 +146,7 @@ export default function Today({ data, update, startTimer }) {
                       <h3>{c.topics[state.topic]}</h3>
                     </div>
                   ))}
-                  {!s.courses.length && <h3>Plan the week + one case study</h3>}
+                  {!s.courses.length && <h3>{s.label}</h3>}
                   <p className="task">
                     <Sparkles size={15} />
                     <span>
@@ -141,7 +154,9 @@ export default function Today({ data, update, startTimer }) {
                         ? "Work through past questions, mark and correct your answers."
                         : s.courses.length
                           ? state.mode.task
-                          : "Choose your priorities for the coming week, then work through one case study."}
+                          : s.label === "Plan the week + one case study"
+                            ? "Choose your priorities for the coming week, then work through one case study."
+                            : state.mode.task}
                     </span>
                   </p>
                   <div className="session-actions">
@@ -189,7 +204,9 @@ export default function Today({ data, update, startTimer }) {
             <span className="eyebrow">TODAY, AT A GLANCE</span>
             <div
               className="progress-ring"
-              style={{ "--progress": `${(done / sessions.length) * 100}%` }}
+              style={{
+                "--progress": `${sessions.length ? (done / sessions.length) * 100 : 0}%`,
+              }}
             >
               <div>
                 <strong>

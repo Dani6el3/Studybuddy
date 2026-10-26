@@ -17,6 +17,7 @@ import TimerPage from "./pages/Timer";
 import Progress from "./pages/Progress";
 import SettingsPage from "./pages/Settings";
 import { newTimer, finishTimer, notifyComplete } from "./lib/timer";
+import SessionReminders from "./components/SessionReminders";
 const tabs = [
   ["today", "Today", Sun],
   ["week", "Week", CalendarDays],
@@ -28,6 +29,7 @@ export default function App() {
   const [loaded] = useState(loadData);
   const [data, setData] = useState(loaded.data);
   const [error, setError] = useState(loaded.error);
+  const [reminder, setReminder] = useState("");
   const [route, setRoute] = useState(location.hash.slice(1) || "today");
   useEffect(() => {
     const go = () => {
@@ -67,6 +69,7 @@ export default function App() {
   };
   return (
     <div className="app-shell">
+      <SessionReminders data={data} update={update} onReminder={setReminder} />
       <aside className="sidebar">
         <a className="brand" href="#today">
           <span className="brand-mark">
@@ -106,6 +109,18 @@ export default function App() {
           </a>
         </header>
         <main id="main">
+          {reminder && (
+            <div className="notice" role="status">
+              <strong>Time to study</strong>
+              <p>{reminder}</p>
+              <div className="row">
+                <a className="button" href="#today">
+                  See today’s sessions
+                </a>
+                <button onClick={() => setReminder("")}>Dismiss</button>
+              </div>
+            </div>
+          )}
           {error && (
             <div className="notice" role="alert">
               {error}

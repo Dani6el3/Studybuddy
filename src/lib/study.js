@@ -21,12 +21,14 @@ export const minutes = (time) => {
   return h * 60 + m;
 };
 export const duration = (s) => minutes(s.end) - minutes(s.start);
-export const sessionsFor = (date = new Date()) =>
-  schedule[date.getDay()].map((s, i) => ({
-    ...s,
-    id: `${dateKey(date)}:${i}`,
-    courses: s.codes.map((code) => courses.find((c) => c.code === code)),
-  }));
+export const sessionsFor = (date = new Date(), customSchedule = null) =>
+  (customSchedule || schedule)[date.getDay()]
+    .map((s, i) => ({
+      ...s,
+      id: `${dateKey(date)}:${s.id || i}`,
+      courses: s.codes.map((code) => courses.find((c) => c.code === code)),
+    }))
+    .sort((a, b) => minutes(a.start) - minutes(b.start));
 export const topicKey = (code, i) => `${code}:${i}`;
 export function youtubeId(value) {
   try {
