@@ -15,8 +15,8 @@ export default defineConfig({
         short_name: "StudyBuddy",
         description:
           "Your offline study space for 500-level Medical Laboratory Science.",
-        theme_color: "#245b49",
-        background_color: "#f7f8f4",
+        theme_color: "#56378a",
+        background_color: "#fbf7f2",
         display: "standalone",
         start_url: "./",
         scope: "./",
@@ -60,3 +60,4 @@ export default defineConfig({
     }),
   ],
 });
+
